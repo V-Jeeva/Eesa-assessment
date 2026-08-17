@@ -35,3 +35,22 @@ CREATE TABLE payments (
     currency TEXT,
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
+
+-- 4. Indexes
+-- FK lookup: JOINing orders to users (e.g. "top customers by spend")
+CREATE INDEX idx_orders_user_id ON orders(user_id);
+
+-- FK lookup: JOINing payments to orders (e.g. revenue calculations)
+CREATE INDEX idx_payments_order_id ON payments(order_id);
+
+-- Filter: querying orders by status (e.g. excluding cancelled/returned)
+CREATE INDEX idx_orders_status ON orders(status);
+
+-- Filter: querying orders by date range (e.g. "orders in June 2026")
+CREATE INDEX idx_orders_order_date ON orders(order_date);
+
+-- Filter: querying payments by status (e.g. captured payments for revenue)
+CREATE INDEX idx_payments_status ON payments(status);
+
+-- Filter: querying users by country (e.g. "revenue by region")
+CREATE INDEX idx_users_country ON users(country);
