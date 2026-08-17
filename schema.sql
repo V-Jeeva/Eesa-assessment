@@ -1,5 +1,5 @@
 -- 1. Users Table
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     user_id TEXT PRIMARY KEY,
     full_name TEXT,
     email TEXT,
@@ -11,7 +11,7 @@ CREATE TABLE users (
 );
 
 -- 2. Orders Table (Renamed 'credit' to 'discount_amount')
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
     order_id TEXT PRIMARY KEY,
     user_id TEXT,
     order_date DATE,
@@ -24,7 +24,7 @@ CREATE TABLE orders (
 );
 
 -- 3. Payments Table (Renamed 'wallet_applied' to 'store_credit_used')
-CREATE TABLE payments (
+CREATE TABLE IF NOT EXISTS payments (
     payment_id TEXT PRIMARY KEY,
     order_id TEXT,
     paid_at TIMESTAMP,
@@ -38,19 +38,19 @@ CREATE TABLE payments (
 
 -- 4. Indexes
 -- FK lookup: JOINing orders to users (e.g. "top customers by spend")
-CREATE INDEX idx_orders_user_id ON orders(user_id);
+CREATE INDEX IF NOT EXISTS idx_orders_user_id ON orders(user_id);
 
 -- FK lookup: JOINing payments to orders (e.g. revenue calculations)
-CREATE INDEX idx_payments_order_id ON payments(order_id);
+CREATE INDEX IF NOT EXISTS idx_payments_order_id ON payments(order_id);
 
 -- Filter: querying orders by status (e.g. excluding cancelled/returned)
-CREATE INDEX idx_orders_status ON orders(status);
+CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
 
 -- Filter: querying orders by date range (e.g. "orders in June 2026")
-CREATE INDEX idx_orders_order_date ON orders(order_date);
+CREATE INDEX IF NOT EXISTS idx_orders_order_date ON orders(order_date);
 
 -- Filter: querying payments by status (e.g. captured payments for revenue)
-CREATE INDEX idx_payments_status ON payments(status);
+CREATE INDEX IF NOT EXISTS idx_payments_status ON payments(status);
 
 -- Filter: querying users by country (e.g. "revenue by region")
-CREATE INDEX idx_users_country ON users(country);
+CREATE INDEX IF NOT EXISTS idx_users_country ON users(country);
