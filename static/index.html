@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AskMetrics — Natural Language Analytics</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Chart.js for deterministic rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AskMetrics</h1>
+            <p class="subtitle">Natural Language Relational Analytics</p>
+        </header>
+
+        <section class="search-section">
+            <form id="query-form">
+                <input 
+                    type="text" 
+                    id="question-input" 
+                    placeholder="Ask a question (e.g., Who are our top 10 customers by total amount spent?)" 
+                    required 
+                    autocomplete="off"
+                />
+                <button type="submit" id="submit-btn">Run Query</button>
+            </form>
+        </section>
+
+        <!-- Loading State -->
+        <div id="loading" class="state-card hidden">
+            <div class="spinner"></div>
+            <p>Translating question to SQL and querying database...</p>
+        </div>
+
+        <!-- Refusal & Error State -->
+        <div id="message-box" class="state-card hidden"></div>
+
+        <!-- Results Section -->
+        <main id="results-container" class="hidden">
+            <section class="sql-box">
+                <h3>Generated SQL Query</h3>
+                <pre><code id="sql-display"></code></pre>
+            </section>
+
+            <section class="data-display">
+                <div class="table-wrapper">
+                    <h3>Query Results</h3>
+                    <div id="table-container"></div>
+                </div>
+
+                <div id="chart-wrapper" class="chart-wrapper hidden">
+                    <h3 id="chart-title">Visual Breakdown</h3>
+                    <canvas id="result-chart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
